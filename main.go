@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// Test Comment
 const (
 	NOTHING = 0
 	WALL    = 1
