@@ -163,6 +163,7 @@ func (g *game) start() {
 	g.loop()
 }
 
+//tetstettstetste
 // comment - what does this func
 func (g *game) loop() {
 	for g.isRunning {
