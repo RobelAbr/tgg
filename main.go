@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"os/exec"
 	"time"
 )
 
@@ -22,9 +23,9 @@ type input struct {
 }
 
 // comment - what does this func
-func (i *input) listen() {
+func (i *input) update() {
 	b := make([]byte, 1)
-	os.Stdin.Read(b)
+	os.Stdin.Read(b) // blocking until stdin has stuff in buffer
 	i.pressedKey = b[0]
 }
 
@@ -140,6 +141,8 @@ type game struct {
 
 // comment - what does this func
 func newGame(width, height int) *game {
+	exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1").Run()
+	exec.Command("stty", "-F", "/dev/tty", "-echo").Run()
 	var (
 		lvl  = newLevel(width, height)
 		inpu = &input{}
@@ -163,7 +166,6 @@ func (g *game) start() {
 	g.loop()
 }
 
-//tetstettstetste
 // comment - what does this func
 func (g *game) loop() {
 	for g.isRunning {
